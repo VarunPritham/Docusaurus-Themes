@@ -72,6 +72,28 @@ Given a Confluence page from the API:
 4. Attachments → files into `static/files/` (images into `static/img/`), listed with `<Attachments />`
 5. draw.io diagrams → exported PNG into `static/img/`, embedded with `<Figure />`
 
+## Slides button
+
+Every doc page footer has a slides button with two modes:
+
+- **No slides yet** → `⚡ Create slides` — calls your backend, then opens the result
+- **Slides exist** → `▶ Present slides` (opens them) + `↻ Regenerate`
+
+The button talks to a slide-generation service **you** run (e.g. a Python
+script). Set its base URL in `docusaurus.config.ts` → `customFields.slidesApi`
+(default `http://localhost:8000`). Your service implements two endpoints:
+
+```
+GET  {slidesApi}/slides/status?page=/data-platform/lakebridge/setup-guide
+     → {"exists": true, "url": "http://localhost:3030"}   # or {"exists": false}
+
+POST {slidesApi}/slides/generate    {"page": "/data-platform/lakebridge/setup-guide"}
+     → {"url": "http://localhost:3030"}
+```
+
+If the service isn't running, the button still renders and shows a clear
+error on click. Implementation: `src/theme/DocItem/Footer/`.
+
 ## Security posture
 
 - No CDN links, no web fonts, no analytics, no iframes

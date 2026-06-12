@@ -20,6 +20,14 @@ const config: Config = {
 
   onBrokenLinks: 'throw',
 
+  customFields: {
+    // Base URL of your slide-generation backend (the Python service).
+    // The "Create slides" button on every doc page calls:
+    //   GET  {slidesApi}/slides/status?page=<route>
+    //   POST {slidesApi}/slides/generate  {"page": "<route>"}
+    slidesApi: 'http://localhost:8000',
+  },
+
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
