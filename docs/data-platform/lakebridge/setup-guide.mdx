@@ -1,0 +1,45 @@
+---
+title: Setup Guide
+sidebar_position: 1
+---
+
+import { Meta, Panel, PropertiesTable, Expand, Ticket, Mention } from '@site/src/components/Bricks';
+
+<Meta owner="Sai Kumar" lastUpdated="2026-06-11" status="Current" tags={['setup', 'lakebridge']} />
+
+# Setup Guide
+
+A sample child page (`docs/data-platform/lakebridge/setup-guide.mdx`) — in
+Confluence terms: **Data Platform → LakeBridge → Setup Guide**. Note the
+breadcrumb trail above the title.
+
+<PropertiesTable
+  rows={[
+    { name: 'Applies to', value: 'LakeBridge 0.10.x' },
+    { name: 'Audience', value: 'Data engineers' },
+    { name: 'Support', value: '#lakebridge-support' },
+  ]}
+/>
+
+## Install
+
+```bash
+pip install lakebridge --index-url https://artifactory.internal/api/pypi/simple
+```
+
+<Panel type="warning">
+  Always install from the internal mirror. Direct PyPI access is blocked.
+</Panel>
+
+## Configure
+
+```bash
+lakebridge configure --transpiler-profile td-firm-v3
+```
+
+<Expand title="What the firm profile changes">
+  The `td-firm-v3` profile maps the in-house Teradata UDFs and date macros
+  that the generic profile does not recognise.
+</Expand>
+
+Questions? Ask <Mention name="Sai Kumar" /> or follow <Ticket id="DATA-980" status="Done" statusColor="green" summary="LakeBridge rollout" />.

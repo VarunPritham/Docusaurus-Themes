@@ -1,0 +1,4 @@
+environment: production
+owner: data-platform
+max_workers: 8
+auto_terminate_minutes: 60

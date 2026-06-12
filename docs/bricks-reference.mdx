@@ -1,0 +1,157 @@
+---
+title: Bricks Reference
+sidebar_position: 2
+---
+
+import {
+  Badge, Panel, Expand, PropertiesTable, TaskList,
+  Figure, Attachments, Ticket, Mention, Columns, Column, Meta,
+} from '@site/src/components/Bricks';
+
+<Meta owner="Platform Team" lastUpdated="2026-06-11" status="Current" tags={['reference', 'bricks']} />
+
+# Bricks Reference
+
+Every brick, used once. This page is the canonical example of how a converted
+Confluence page is written — copy the patterns here.
+
+Plain markdown covers text, **bold**, headings, lists, tables, and code blocks.
+Bricks cover everything Confluence does beyond markdown.
+
+## Status lozenges → `<Badge>`
+
+Project is <Badge color="green">ON TRACK</Badge>, the migration is
+<Badge color="yellow">IN PROGRESS</Badge>, and the legacy feed is
+<Badge color="red">BLOCKED</Badge> pending <Badge color="blue">REVIEW</Badge>.
+
+## Panels → `<Panel>`
+
+<Panel type="info">
+  Clusters in the dev workspace are shared. Check the booking page before running large jobs.
+</Panel>
+
+<Panel type="warning" title="Production access">
+  All production access requires an approved ticket. There are **no exceptions**.
+</Panel>
+
+<Panel type="error" title="Known issue">
+  The nightly extract fails if the source schema changes — see <Ticket id="DATA-1042" status="In Progress" />.
+</Panel>
+
+<Panel type="success">
+  Migration of the finance schemas completed ahead of schedule.
+</Panel>
+
+<Panel type="note">
+  This page replaces the old wiki article. Update bookmarks.
+</Panel>
+
+## Expand sections → `<Expand>`
+
+<Expand title="Full error log from the failed run">
+
+```text
+26/06/03 06:15:12 ERROR JobRunner: Task failed
+py4j.protocol.Py4JJavaError: An error occurred while calling o123.save.
+Caused by: org.apache.spark.SparkException: Job aborted due to stage failure
+```
+
+</Expand>
+
+<Expand title="Why we chose triggered mode over continuous" defaultOpen>
+  Continuous mode keeps a cluster running 24/7. Our workloads are bursty, so
+  triggered mode cut compute cost by roughly **60%** with no SLA impact.
+</Expand>
+
+## Page properties → `<PropertiesTable>`
+
+<PropertiesTable
+  title="Deployment details"
+  rows={[
+    { name: 'Environment', value: 'Production' },
+    { name: 'Owner', value: 'Data Platform' },
+    { name: 'Schedule', value: 'Daily, 06:00 UTC' },
+    { name: 'Runtime', value: 'DBR 14.3 LTS' },
+    { name: 'Cost centre', value: 'CC-4421' },
+  ]}
+/>
+
+## Action items → `<TaskList>`
+
+<TaskList
+  title="Actions from the review"
+  items={[
+    { task: 'Update the runbook with the new failover steps', owner: 'Priya Shah', due: '2026-06-20' },
+    { task: 'Raise the firewall request for the new endpoint', owner: 'Sai Kumar', due: '2026-06-15' },
+    { task: 'Archive the legacy dashboard', owner: 'James Wong', done: true },
+  ]}
+/>
+
+## Images & diagrams → `<Figure>`
+
+draw.io diagrams arrive as exported images — place them in `static/img/` and reference by path. Click to enlarge.
+
+<Figure
+  src="/img/sample-diagram.svg"
+  caption="High-level ingest flow (exported from draw.io)"
+  width={560}
+/>
+
+## Attachments → `<Attachments>`
+
+Images show as thumbnails; everything else is a download row — same behaviour as Confluence.
+
+<Attachments
+  files={[
+    { name: 'sample-diagram.svg', url: '/img/sample-diagram.svg' },
+    { name: 'sample-config.yaml', url: '/files/sample-config.yaml', size: '1 KB' },
+  ]}
+/>
+
+## Ticket references → `<Ticket>`
+
+Raised as <Ticket id="DATA-1042" status="In Progress" summary="Add S3 sink to ingest" /> —
+the rollback is tracked in <Ticket id="DATA-1043" status="Done" statusColor="green" />.
+
+## Mentions → `<Mention>`
+
+Reviewed by <Mention name="Priya Shah" /> and <Mention name="James Wong" />.
+
+## Two columns → `<Columns>`
+
+<Columns>
+  <Column>
+    **Before**
+
+    Nightly batch extract, 26-hour data freshness, manual recovery.
+  </Column>
+  <Column>
+    **After**
+
+    Streaming ingest, 5-minute freshness, automatic replay from Kafka.
+  </Column>
+</Columns>
+
+## Page byline → `<Meta>`
+
+The byline at the top of this page is the `<Meta>` brick — owner, last
+updated, status, and tags. Place it directly under the page title.
+
+## Everything markdown already does
+
+No bricks needed for any of this:
+
+| Element | How |
+|---|---|
+| Headings, text, lists | plain markdown |
+| Tables | markdown tables (this one) |
+| Code blocks | fenced blocks with language tag |
+| Table of contents | automatic — right-hand rail |
+| Child page cards | `<DocCardList />` from `@theme/DocCardList` |
+| Links between pages | relative markdown links |
+
+```python
+# Code blocks get syntax highlighting out of the box
+def hello(name: str) -> str:
+    return f"Hello, {name}"
+```

@@ -1,0 +1,38 @@
+---
+title: Troubleshooting
+sidebar_position: 2
+---
+
+import { Meta, Panel, Expand, TaskList } from '@site/src/components/Bricks';
+
+<Meta owner="Migration Squad" lastUpdated="2026-06-11" status="Current" tags={['troubleshooting']} />
+
+# Troubleshooting
+
+Second sample child page, completing the hierarchy demo.
+
+## Transpile fails on QUALIFY clauses
+
+<Panel type="error" title="Symptom">
+  `TranspileError: unsupported construct QUALIFY at line 14`
+</Panel>
+
+You are on the generic profile. Re-run:
+
+```bash
+lakebridge configure --transpiler-profile td-firm-v3
+```
+
+<Expand title="Other known transpile gaps">
+  BTEQ control logic and journal tables are flagged as *manual rewrite* in the
+  assessment report — they are not transpiled automatically.
+</Expand>
+
+## Open follow-ups
+
+<TaskList
+  items={[
+    { task: 'Document the recon cluster policy request flow', owner: 'Dana Lee', due: '2026-06-30' },
+    { task: 'Add QUALIFY regression test to CI', owner: 'Sai Kumar', done: true },
+  ]}
+/>
